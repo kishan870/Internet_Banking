@@ -26,5 +26,5 @@ To Run the Project:
 
 * Activate the virtual environment for the Django Project
 
-** Activate
+*  Activate
 
