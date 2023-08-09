@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+    {% block title %}
+      Finance Bank
+      {% endblock %}
+      {% block content %}
+      <div class="container p-2 mt-5">
+        <div class="row">
+          <div class="col-sm-4 rounded p-4 mt-5 bg-primary text-white">
+            <form action="register/" method="POST">
+              {% csrf_token %}
+              <div class="mb-3 mt-3">
+                <label for="Register" class="form-label">Register New User:</label>
+                <input id="Register" type="submit" value="Register" class="btn btn-warning"></input>
+              </div>
+              </form>
+            <form action="login/" method="POST">
+              {% csrf_token %}
+              <div class="mb-3 mt-3">
+                <label for="Login" class="form-label">Login Existing User:</label>
+                <input id="Login" type="submit" value="Login" class="btn btn-warning"></input>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <style>
+          #Register:hover, #Login:hover {background-color : #B7B858}
+          #Register:active, #Login:active {background-color : #878843}
+        </style>
+      {% endblock %}

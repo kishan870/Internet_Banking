@@ -1,0 +1,267 @@
+{% extends "template.html" %}
+{% load static %}
+{% block title %}
+Account
+{% endblock %}
+{% block content %}
+{% csrf_token %}
+<nav class="navbar navbar-expand-sm bg-light">
+  <div class="container-fluid">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <button type="button" id="accsummary" class="btn btn-warning">Account Summary</button>
+        <button type="button" id="fundtranfer" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal">Fund Transfer</button>
+        <button type="button" id="accstatement" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal4">Account Statement</button>
+        <button type="button" id="transPasswd" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">Set Transaction Password</button>
+      </li>
+    </ul>
+    <ul class="navbar-nav mx-auto">
+    <li class="nav-item">
+      <a href="/logout/" id="logout" class="btn btn-danger">Logout</a>
+      </li>
+      </ul>
+    <!-- The Modal -->
+<div class="modal fade" id="myModal" data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Fund Transfer</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-check mt-3 mb-3">
+          <label class="form-check-label" for="radio1">Select Account</label><br>
+          <input type="radio" class="form-check-input" id="accountSelected" name="radioCheck0" value={{ accountno }}>{{ accountno }}<br>
+          <h7 class="validate" id="accCheckValidate" style="color:red">Please select an account</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="number" class="form-control" id="accNum" placeholder="Account Number" required>
+          <label for="email">Beneficiary Account Number</label>
+          <h7 class="validate" id="accNumValidate" style="color:red">Please enter this field</h7>
+          <h7 class="validate" id="sameAccount" style="color:red">Beneficiary cannot be same account</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="number" id="confAccNum" class="form-control" placeholder="Account Number" required>
+          <label for="email">Confirm Account Number</label>
+          <h7 class="validate" id="confaccNumValidate" style="color:red">Please enter this field</h7>
+          <h7 class="validate" id="mismatchAccNum" style="color:red">Account Numbers do not match</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="text" id="accName" class="form-control" placeholder="Name" required>
+          <label for="email">Enter Beneficiary Name</label>
+          <h7 class="validate" id="beneficiaryNameValidate" style="color:red">Please enter this field</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="number" id="transferAmount" class="form-control" placeholder="0" required>
+          <label for="email">Amount: $</label>
+          <h7 class="validate" id="amountValidate" style="color:red">Please enter this field</h7>
+          <h7 class="validate" id="zeroAmount" style="color:red">Amount cannot be zero or less</h7>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="transferFund" class="btn btn-success">Transfer Fund</button>
+        <button type="button" id="close" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal1" data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Authenticate Transaction</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-floating mt-3 mb-3">
+          <input type="password" class="form-control" id="transPassword" placeholder="Password" required>
+          <label for="email">Enter Transaction Password</label>
+          <h7 class="validate" id="transPasswdValidate" style="color:red">Please enter this field</h7>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="authenticate" class="btn btn-success">Submit</button>
+        <button type="button" id="close1" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <h7 class="message" id="insufBalance" style="color:red">Transaction failed due to insufficient balance</h7>
+        <h7 class="message" id="transactionSuccess" style="color:green">Transaction Successful</h7>
+        <h7 class="message" id="serverError" style="color:red">Server Error. Please try again later.</h7>
+        <h7 class="message" id="incorrectTransPassword" style="color:red">Incorrect Transaction Password</h7>
+        <h7 class="message" id="invalidAccount" style="color:red">Beneficiary Account does not exist.</h7>
+        <h7 class="message" id="invalidName" style="color:red">Beneficiary Name is not valid</h7>
+        <h7 class="message" id="invalidSession" style="color:red">Invalid Session <a href="/login/">Login again</a></h7>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal2" data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Select Account</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-check mt-3 mb-3">
+          <label class="form-check-label" for="radio1">Select Account</label><br>
+          <input type="radio" class="form-check-input" id="accountSelectedPass" name="radioCheck1" value={{ accountno }}>{{ accountno }}<br>
+          <h7 class="validate" id="accCheckValidate1" style="color:red">Please select an account</h7>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="next" class="btn btn-success">Next</button>
+        <button type="button" id="close2" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+        <h7 class="validate" id="serverError" style="color:red">There is a problem. Please try again later.</h7>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal3" data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Set Password</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div id="currPasswordDisplay" class="form-floating mt-3 mb-3">
+          <input type="password" class="form-control" id="currPassword" placeholder="Current Password" required>
+          <label for="email">Current Password</label>
+          <h7 class="validate" id="currPasswordValidate" style="color:red">Please enter this field</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="password" id="newPassword" class="form-control" placeholder="New Password" required>
+          <label for="email">New Password</label>
+          <h7 class="validate" id="newPasswordValidate" style="color:red">Please enter this field</h7>
+        </div>
+        <div class="form-floating mt-3 mb-3">
+          <input type="password" id="newPasswordConfirm" class="form-control" placeholder="Name" required>
+          <label for="email">Confirm Password</label>
+          <h7 class="validate" id="newPasswordConfirmValidate" style="color:red">Please enter this field</h7>
+          <h7 class="validate" id="mismatchPassword" style="color:red">Passwords do not match</h7>
+          <h7 class="validate" id="serverError" style="color:red">There is a problem. Please try again later.</h7>
+          <h7 class="validate" id="passwordRequirement" style="color:red">New Password does not follow requirements</h7>
+          <h7 class="message" id="passwordChangeSuccess" style="color:green">Password changed successfully</h7>
+          <h7 class="message" id="invalidSessionPassword" style="color:red">Invalid Session <a href="/login/">Login again</a></h7>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="submitPassword" class="btn btn-success">Submit</button>
+        <button type="button" id="close3" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <h7 class="validate" id="incorrectPassword" style="color:red">Current Password is Incorrect</h7>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal4" data-bs-keyboard="false" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Account Statement</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-check mt-3 mb-3">
+          <label class="form-check-label" for="radio1">Select Account</label><br>
+          <input type="radio" class="form-check-input" id="accountStatementSelected" name="radioCheck2" value={{ accountno }}>{{ accountno }}<br>
+          <h7 class="validate" id="accStatementCheckValidate" style="color:red">Please select an account</h7>
+        </div>
+
+        <div class="form-floating mt-3 mb-3">
+          <h4>Select Period</h4>
+        </div>
+
+        <div class="form-check mt-3 mb-3">
+          <input type="radio" class="form-check-input" id="oneMonthStatement" name="radioDateCheck" value="lastMonth" checked>Last 30 days<br>
+          <input type="radio" class="form-check-input" id="customRangeStatement" name="radioDateCheck" value="customRange">Select Date Range<br>
+          <h7 class="validate" id="selectPeriodValidate" style="color:red">Please select an option</h7>
+        </div>
+
+        <div id="datePicker" class="form-floating mt-3 mb-3">
+          <h7 style="color:blue">From:</h7>
+          <input id="fromDate" class="form-control" type="date" /><br>
+          <h7 style="color:blue">To:</h7>
+          <input id="toDate" class="form-control" type="date" />
+          </div>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" id="submitRange" class="btn btn-success">Submit</button>
+        <button type="button" id="close4" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <h7 class="message" id="invalidSessionAccStatement" style="color:red">Invalid Session <a href="/login/">Login again</a></h7>
+        <h7 class="validate" id="serverErrorAccStatement" style="color:red">There is a problem. Please try again later.</h7>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</nav>
+<div id="accDetails" class="container rounded p-5 my-5 bg-dark text-white">
+<h2>Welcome {{ name }}</h2>
+<h3>Account Number : {{ accountno }}</h3>
+<h3 id="accountBalance">Balance : ${{ balance }}</h3>
+</div><br><br>
+<div id="accTable" class="container rounded">
+  <h3>Account Number : {{ accountno }}</h3>
+  <h3>Name : {{ name }}</h3>
+  <table id="accStatementTable" class="table table-striped table-sm table-hover table-bordered table-responsive">
+    <tr class="table-primary">
+      <th>Date</th>
+      <th>Reference ID</th>
+      <th>Description</th>
+      <th>Credit</th>
+      <th>Debit</th>
+      <th>Balance</th>
+    </tr>
+    </table>
+</div>
+<script src="{% static 'JS/accounts.js' %}"></script>
+<style>
+  #accsummary:hover, #fundtranfer:hover, #accstatement:hover, #transPasswd:hover {background-color : #B7B858}
+  #accsummary:active, #fundtranfer:active, #accstatement:active, #transPasswd:active {background-color : #878843}
+  </style>
+{% endblock %}

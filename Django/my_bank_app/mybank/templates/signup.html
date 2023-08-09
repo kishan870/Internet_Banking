@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+<div class="container-fluid p-2 bg-white">
+  <h4>Account Number : {{ accountno }}</h4>
+  <h4>Name : {{ name }}</h4>
+  <h4>User ID : {{ uid }}</h4>
+</div>
+<div class="container p-2 mt-5">
+  <div class="row">
+    <div class="col-sm-4 rounded p-4 mt-5 bg-primary text-white">
+      <form action="/signupSuccessful/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <label for="newPassword" class="form-label">Enter New Password:</label>
+          <input type="password" class="form-control" name="password" required id="password" placeholder="Password">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm your Password:</label>
+          <input type="password" class="form-control" name="re_password" maxlength="255" required id="re_password" placeholder="Confirm Password">
+        </div>
+        <input id="submitPassword" type="submit" value="Submit" class="btn btn-warning">
+        {% if invalid_login == "True" %}
+          <h7 class="message" id="invalidCredentials" style="color:#EC7063">Invalid User ID or Password</h7>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+  #submitPassword:hover {background-color : #B7B858}
+  #submitPassword:active {background-color : #878843}
+  </style>
+  {% endblock %}

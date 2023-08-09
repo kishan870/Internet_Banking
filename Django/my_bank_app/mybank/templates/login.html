@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+<div class="container p-2 mt-5">
+  <div class="row">
+    <div class="col-sm-4 rounded p-4 mt-5 bg-primary text-white">
+      <form action="/account/" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <label for="userID" class="form-label">User ID:</label>
+          <input type="text" class="form-control" id="id_userID" placeholder="Enter your User ID" name="userID" required>
+        </div>
+        <div class="mb-3">
+          <label for="pwd" class="form-label">Password:</label>
+          <input type="password" class="form-control" maxlength="255" id="id_password" placeholder="Enter password" name="password" required>
+        </div>
+        <button id="Login" type="submit" class="btn btn-warning">Login</button><br>
+        <h7 class="forgotPassword" id="forgotPassword"><a style="color:#F8F03F" href="/login/">Forgot Password</a></h7>
+        {% if invalid_login == "True" %}
+          <h7 class="message" id="invalidCredentials" style="color:#EC7063">Invalid User ID or Password</h7>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+  #Login:hover {background-color : #B7B858}
+  #Login:active {background-color : #878843}
+  </style>
+  {% endblock %}
