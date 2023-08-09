@@ -36,6 +36,8 @@ To Run the Project:
   
 * Create banking database in mysql and complete the migrations
 
+Please visit ``Django\my_bank_app\my_bank_app\settings.py`` to view Database settings.
+
   - Run ``Django\my_bank_app\python manage.py makemigrations mybank``
   
   - Run ``Django\my_bank_app\python manage.py migrate``
