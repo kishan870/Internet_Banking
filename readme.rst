@@ -34,7 +34,7 @@ To Run the Project:
   
 * Create banking database in mysql and complete the migrations
 
-  -Run ``Django\my_bank_app\python manage.py makemigrations mybank``
+  - Run ``Django\my_bank_app\python manage.py makemigrations mybank``
   
-  -Run ``Django\my_bank_app\python manage.py migrate``
+  - Run ``Django\my_bank_app\python manage.py migrate``
 
