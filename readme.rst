@@ -45,4 +45,17 @@ To Run the Project:
 * Start Django server:
 
   - Run ``Django\my_bank_app\python manage.py runserver``
+  
+  
+  
+Adding Accounts
+===============
+
+Please create and add new accounts to ``mybank_accountdetails`` table to simulate net banking operations.
+
+
+Register Tokens
+===============
+
+Please viisit ``http://.../admin/`` to create registration tokens for new users. New users can sign up only using these tokens.
 
