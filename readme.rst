@@ -7,15 +7,18 @@ This project implements internet banking functionalities such as creating a new 
 Libraries and frameworks used:
 
 Web:
+
 * HTML
 * Javascript
 * JQuery
 
 Frontend:
+
 * CSS
 * Bootstrap-5
 
 Server and Backend:
+
 * Python-Django (version=4.2.4)
 * Jquery-Ajax
 
