@@ -26,5 +26,5 @@ To Run the Project:
 
 * Activate the virtual environment for the Django Project
 
-  - Run `django-crispy-forms`
+  - Run ``Django\myproject\Scripts\activate.bat``
 
