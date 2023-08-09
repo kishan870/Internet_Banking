@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 
+#This file is used to create form data
+
 class RegistrationForm(forms.ModelForm):
     userID = forms.IntegerField()
     token = forms.CharField(max_length=255)

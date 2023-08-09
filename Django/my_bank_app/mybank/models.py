@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+#This file is used to create tables and fields in the selected database
 
 class AccountDetails(models.Model):
     AccountNumber = models.IntegerField(primary_key=True)
