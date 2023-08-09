@@ -22,3 +22,9 @@ Server and Backend:
 * Python-Django (version=4.2.4)
 * Jquery-Ajax
 
+To Run the Project:
+
+* Activate the virtual environment for the Django Project
+
+** Activate
+
